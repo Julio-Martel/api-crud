@@ -21,7 +21,6 @@ const tareaRegistrada = (req,res,next) => {
     }
 
     next();
-
 }
 
 app.post('/tareas', tareaRegistrada, (req,res)=>{
