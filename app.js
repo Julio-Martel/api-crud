@@ -38,7 +38,6 @@ const tareaRegistrada = (req,res,next) => {
     next();
 }
 
-
 app.put('/tareas/:codigo', tareaRegistrada, (req,res) => {
     const codigo = parseInt(req.params.codigo)
     const posicionTarea = tareas.findIndex(t => t.codigo === codigo);
