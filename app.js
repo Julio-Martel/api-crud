@@ -8,22 +8,7 @@ app.get('/tareas',(req,res) => {
     res.json(tareas);
 })
 
-const tareaRegistrada = (req,res,next) => {
-
-    const codigo = parseInt(req.body.codigo);
-
-    const existe = tareas.find(t => t.codigo === codigo);
-
-    if(existe){
-        return res.status(409).json({
-            error: "Ese código ya existe"
-        });
-    }
-
-    next();
-}
-
-app.post('/tareas', tareaRegistrada, (req,res)=>{
+app.post('/tareas', (req,res)=>{
 
     const tareaNueva = {
         codigo: tareas.length + 1,
@@ -36,6 +21,40 @@ app.post('/tareas', tareaRegistrada, (req,res)=>{
     res.status(201).json(tareaNueva);
 
 });
+
+const tareaRegistrada = (req,res,next) => {
+
+    const codigo = parseInt(req.params.codigo);
+
+    const existe = tareas.find(t => t.codigo === codigo);
+    
+
+    if(!existe){
+        return res.status(409).json({
+            error: "El codigo no existe"
+        });
+    }
+
+    next();
+}
+
+
+app.put('/tareas/:codigo', tareaRegistrada, (req,res) => {
+    const codigo = parseInt(req.params.codigo)
+    const posicionTarea = tareas.findIndex(t => t.codigo === codigo);
+
+    const nuevoUsuario = {
+        codigo: posicionTarea,// corregir esto
+        tarea: req.body.tarea,
+        descripcion: req.body.descripcion
+    }
+
+    tareas[posicionTarea]  = nuevoUsuario; 
+
+
+    res.json(nuevoUsuario);
+
+})
 
 app.listen(3000,()=>{
     console.log('Servidor en funcionamiento')
