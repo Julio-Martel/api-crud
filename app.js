@@ -44,7 +44,7 @@ app.put('/tareas/:codigo', tareaRegistrada, (req,res) => {
     const posicionTarea = tareas.findIndex(t => t.codigo === codigo);
 
     const nuevoUsuario = {
-        codigo: posicionTarea,// corregir esto
+        codigo: req.body.codigo,
         tarea: req.body.tarea,
         descripcion: req.body.descripcion
     }
