@@ -30,7 +30,7 @@ const tareaRegistrada = (req,res,next) => {
     
 
     if(!existe){
-        return res.status(409).json({
+        return res.status(404).json({
             error: "El codigo no existe"
         });
     }
@@ -42,16 +42,16 @@ app.put('/tareas/:codigo', tareaRegistrada, (req,res) => {
     const codigo = parseInt(req.params.codigo)
     const posicionTarea = tareas.findIndex(t => t.codigo === codigo);
 
-    const nuevoUsuario = {
-        codigo: req.body.codigo,
+    const tareaActualizada = {
+        codigo: codigo,
         tarea: req.body.tarea,
         descripcion: req.body.descripcion
     }
 
-    tareas[posicionTarea]  = nuevoUsuario; 
+    tareas[posicionTarea]  = tareaActualizada; 
 
 
-    res.json(nuevoUsuario);
+    res.json(tareaActualizada);
 
 })
 
